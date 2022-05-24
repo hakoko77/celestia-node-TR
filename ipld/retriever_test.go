@@ -12,6 +12,10 @@ import (
 	"github.com/tendermint/tendermint/pkg/da"
 )
 
+func init() {
+	rand.Seed(time.Now().UnixNano()) // randomize quadrant fetching
+}
+
 func TestRetriever_Retrieve(t *testing.T) {
 	NumWorkersLimit = 100            // limit the amount of workers for max square size case on CI
 	rand.Seed(time.Now().UnixNano()) // otherwise, the quadrant sampling is deterministic in tests
@@ -29,7 +33,11 @@ func TestRetriever_Retrieve(t *testing.T) {
 	tests := []test{
 		{"1x1(min)", 1},
 		{"2x2(med)", 2},
+		{"4x4(med)", 4},
+		{"8x8(med)", 8},
+		{"16x16(med)", 16},
 		{"32x32(med)", 32},
+		{"64x64(med)", 64},
 		{"128x128(max)", MaxSquareSize},
 	}
 	for _, tc := range tests {

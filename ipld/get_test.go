@@ -22,8 +22,6 @@ import (
 	"github.com/tendermint/tendermint/pkg/da"
 	"github.com/tendermint/tendermint/pkg/wrapper"
 
-	"github.com/celestiaorg/nmt"
-
 	"github.com/celestiaorg/celestia-node/ipld/plugin"
 	"github.com/celestiaorg/nmt/namespace"
 	"github.com/celestiaorg/rsmt2d"
@@ -391,34 +389,4 @@ func TestGetProofs(t *testing.T) {
 			require.True(t, proof.Validate(rootCid))
 		}
 	}
-}
-
-func TestRetrieveDataFailedWithByzantineError(t *testing.T) {
-	const width = 8
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
-	defer cancel()
-
-	dag := mdutils.Mock()
-	eds := RandEDS(t, width)
-	shares := ExtractEDS(eds)
-	eds, err := ImportShares(ctx, shares, dag)
-	require.NoError(t, err)
-
-	// corrupt shares so that eds erasure coding does not match
-	copy(shares[14][8:], shares[15][8:])
-
-	// import corrupted eds
-	batchAdder := NewNmtNodeAdder(ctx, format.NewBatch(ctx, dag, format.MaxSizeBatchOption(batchSize(width*2))))
-	tree := wrapper.NewErasuredNamespacedMerkleTree(uint64(width), nmt.NodeVisitor(batchAdder.Visit))
-	attackerEDS, err := rsmt2d.ImportExtendedDataSquare(shares, DefaultRSMT2DCodec(), tree.Constructor)
-	require.NoError(t, err)
-	err = batchAdder.Commit()
-	require.NoError(t, err)
-
-	// ensure we rcv an error
-	da := da.NewDataAvailabilityHeader(attackerEDS)
-	r := NewRetriever(dag)
-	_, err = r.Retrieve(ctx, &da)
-	var errByz *ErrByzantine
-	require.ErrorAs(t, err, &errByz)
 }

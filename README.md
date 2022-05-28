@@ -32,6 +32,9 @@ Düğüm türü başına sistem gereksinimleri için resmi belgeler sayfasına b
 * [Full](https://docs.celestia.org/nodes/full-node#hardware-requirements)
 
 ## Validator Node Kurulumu (Mamaki)
+Mamaki Testnetinde Validator Node kurulumu, Sunucunuza baglanıp adım adım ilerleyin.
+[Explorer](https://celestia.explorers.guru/). 
+
 # Validator Node Gereksinimleri 
 
 |    Bellek   |       Cpu      |      Disk      |   Ağ           |

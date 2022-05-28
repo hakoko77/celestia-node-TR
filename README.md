@@ -7,6 +7,8 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/celestiaorg/celestia-node)](https://goreportcard.com/report/github.com/celestiaorg/celestia-node)
 [![codecov](https://codecov.io/gh/celestiaorg/celestia-node/branch/main/graph/badge.svg?token=CWGA4RLDS9)](https://codecov.io/gh/celestiaorg/celestia-node)
 
+![image](https://user-images.githubusercontent.com/101149671/170825153-0af8d236-45b7-4382-9f68-4e544c23f4e1.png)
+
 Celestia Ağındaki Düğüm (Node) Türleri  (`light` | `full` | `bridge`).
 
 Yukarıda açıklanan celestia düğümü türleri, celestia veri kullanılabilirliği (DA) ağını içerir.
